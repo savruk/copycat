@@ -1,0 +1,10 @@
+[package]
+name = "copycat"
+version = "0.1.0"
+authors = ["Yusuf Koseoglu <yusufkoseoglu287@gmail.com>"]
+
+[dependencies]
+gtk = { git = "https://github.com/gtk-rs/gtk.git" }
+clipboard = "0.3.0"
+cocoa = "0.8.1"
+objc = "0.2.2"
