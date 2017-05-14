@@ -1,12 +1,12 @@
 extern crate cocoa;
 
-use cocoa::base::{selector, nil, id};
-use cocoa::foundation::{NSAutoreleasePool,
+use cocoa::base::{selector, nil, id, NO};
+use cocoa::foundation::{NSAutoreleasePool, NSRect, NSPoint, NSSize, NSUInteger,
                         NSProcessInfo, NSString};
 
 use cocoa::appkit::{NSApp, NSApplication, NSApplicationActivationPolicyAccessory,
-                    NSMenu, NSMenuItem,
-                    NSStatusItem, NSStatusBar,
+                    NSMenu, NSMenuItem, NSWindow, NSBackingStoreBuffered,
+                    NSStatusItem, NSStatusBar, NSTitledWindowMask,
                     NSVariableStatusItemLength, NSButton};
 //use base::{NSString};
 
@@ -16,8 +16,22 @@ fn main() {
         let app = NSApp();
         app.setActivationPolicy_(NSApplicationActivationPolicyAccessory);
         add_status_item();
+        add_window();
         app.run();
     }
+}
+
+unsafe fn add_window() {
+    let window = NSWindow::alloc(nil).initWithContentRect_styleMask_backing_defer_(
+        NSRect::new(NSPoint::new(0., 0.), NSSize::new(200., 200.)),
+        NSTitledWindowMask as NSUInteger,
+        NSBackingStoreBuffered,
+        NO
+    ).autorelease();
+    window.center();
+    let title = NSString::alloc(nil).init_str("Hello World!");
+    NSWindow::setTitle_(window, title);
+    window.makeKeyAndOrderFront_(nil);
 }
 
 unsafe fn add_status_item() {
